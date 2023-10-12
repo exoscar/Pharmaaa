@@ -1,6 +1,51 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { ethers } from "ethers";
+import { useStateContext } from "../context";
 const AddMedicine = () => {
+  const { addMedicine, connect, address } = useStateContext();
+  if (address) {
+    console.log("Address", address);
+  } else {
+    connect();
+  }
+  const [formData, setFormData] = useState({
+    MedicineName: "",
+    NationalDrugCode: 0,
+    Conditions: "",
+    Quantity: "",
+    Status: 0,
+    Ingredients: "",
+    SideEffects: "",
+    ExpiryDate: "",
+    ManufactureDate: "",
+    BatchNumber: "",
+    Price: "",
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    //  Convert ExpiryDate and ManufactureDate to strings
+    if (name === "ExpiryDate" || name === "ManufactureDate") {
+      setFormData({
+        ...formData,
+        [name]: value.toString(),
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await addMedicine({
+      ...formData,
+    });
+    console.log(formData);
+  };
+
   return (
     <main id="main" className="main">
       <div className="pagetitle">
@@ -14,7 +59,7 @@ const AddMedicine = () => {
               <div className="card-body">
                 <h5 className="card-title"></h5>
 
-                <form className="row g-3">
+                <form className="row g-3" onSubmit={handleSubmit}>
                   <div className="col-md-6">
                     <div className="form-floating">
                       <input
@@ -22,6 +67,9 @@ const AddMedicine = () => {
                         className="form-control"
                         id="floatingName"
                         placeholder="Medicine Name"
+                        name="MedicineName"
+                        value={formData.MedicineName}
+                        onChange={handleInputChange}
                       />
                       <label htmlFor="floatingName">Medicine Name</label>
                     </div>
@@ -33,6 +81,9 @@ const AddMedicine = () => {
                         className="form-control"
                         id="floatingDrugCode"
                         placeholder="National Drug Code"
+                        name="NationalDrugCode"
+                        value={formData.NationalDrugCode}
+                        onChange={handleInputChange}
                       />
                       <label htmlFor="floatingDrugCode">
                         National Drug Code
@@ -47,6 +98,9 @@ const AddMedicine = () => {
                         className="form-control"
                         id="floatingconditions"
                         placeholder="Conditions"
+                        name="Conditions"
+                        value={formData.Conditions}
+                        onChange={handleInputChange}
                       />
                       <label htmlFor="floatingconditions">Conditions</label>
                     </div>
@@ -54,9 +108,13 @@ const AddMedicine = () => {
                   <div className="col-12">
                     <div className="form-floating">
                       <textarea
+                        type="text"
                         className="form-control"
-                        placeholder="Address"
+                        placeholder="Ingredients"
                         id="floatingIngredients"
+                        name="Ingredients"
+                        value={formData.Ingredients}
+                        onChange={handleInputChange}
                       ></textarea>
                       <label htmlFor="floatingIngredients">Ingredients</label>
                     </div>
@@ -68,6 +126,9 @@ const AddMedicine = () => {
                         className="form-control"
                         id="floatingBatchNumber"
                         placeholder="Batch Number"
+                        name="BatchNumber"
+                        value={formData.BatchNumber}
+                        onChange={handleInputChange}
                       />
                       <label htmlFor="floatingBatchNumber">Batch Number</label>
                     </div>
@@ -80,6 +141,9 @@ const AddMedicine = () => {
                           className="form-control"
                           id="floatingQuantity"
                           placeholder="Quantity"
+                          name="Quantity"
+                          value={formData.Quantity}
+                          onChange={handleInputChange}
                         />
                         <label htmlFor="floatingQuantity">Quantity</label>
                       </div>
@@ -93,6 +157,9 @@ const AddMedicine = () => {
                         className="form-control"
                         id="floatingPrice"
                         placeholder="Price"
+                        name="Price"
+                        value={formData.Price}
+                        onChange={handleInputChange}
                       />
                       <label htmlFor="floatingPrice">Price</label>
                     </div>
@@ -104,7 +171,10 @@ const AddMedicine = () => {
                         type="date"
                         className="form-control"
                         id="floatingMdate"
-                        placeholder="Mdate"
+                        placeholder="Manufacturing date"
+                        name="ManufactureDate"
+                        value={formData.ManufactureDate}
+                        onChange={handleInputChange}
                       />
                       <label htmlFor="floatingMdate">Manufacturing date</label>
                     </div>
@@ -115,7 +185,10 @@ const AddMedicine = () => {
                         type="date"
                         className="form-control"
                         id="floatingEdate"
-                        placeholder="Edate"
+                        placeholder="Expiry date"
+                        name="ExpiryDate"
+                        value={formData.ExpiryDate}
+                        onChange={handleInputChange}
                       />
                       <label htmlFor="floatingEdate">Expiry date</label>
                     </div>
@@ -126,6 +199,9 @@ const AddMedicine = () => {
                         className="form-control"
                         placeholder="Address"
                         id="floatingSideEffects"
+                        name="SideEffects"
+                        value={formData.SideEffects}
+                        onChange={handleInputChange}
                       ></textarea>
                       <label htmlFor="floatingSideEffects">Side Effects</label>
                     </div>
