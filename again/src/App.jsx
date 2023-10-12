@@ -137,15 +137,11 @@ const App = () => {
     autoResizeECharts();
   }, []);
 
-  function Layout() {
+  function STLayout() {
     return (
       <div>
         <Topbar />
         <Sidebar />
-        <Routes>
-          <Route path="/addMedicine" element={<AddMedicine />} />
-          <Route path="/viewMedicine" element={<ViewMedicine />} />
-        </Routes>
       </div>
     );
   }
@@ -153,8 +149,25 @@ const App = () => {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Layout />} />
+        <Route path="/dashboard" element={<STLayout />} />
+        <Route
+          path="/addMedicine"
+          element={
+            <div>
+              <STLayout /> <AddMedicine />
+            </div>
+          }
+        />
+        <Route
+          path="/viewMedicine"
+          element={
+            <div>
+              <STLayout /> <ViewMedicine />
+            </div>
+          }
+        />
       </Routes>
     </div>
   );

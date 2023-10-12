@@ -22,7 +22,11 @@ const Login = () => {
               <label className="warning" id="warning-message-login"></label>
               <div className="input-field">
                 <i className="fas fa-user" />
-                <input type="text" name="email" placeholder="Email" />
+                <input
+                  type="text"
+                  name="metamaskid"
+                  placeholder="Metamask ID"
+                />
               </div>
               <div className="input-field">
                 <i className="fas fa-lock" />
@@ -36,19 +40,19 @@ const Login = () => {
               <label className="warning" id="warning-message-signup"></label>
               <div className="input-field">
                 <i className="fas fa-user" />
-                <input type="text" name="name" placeholder="Name" />
+                <input
+                  type="text"
+                  name="CompanyName"
+                  placeholder="Company Name"
+                />
               </div>
               <div className="input-field">
                 <i className="fas fa-user" />
-                <input type="text" name="username" placeholder="Username" />
-              </div>
-              <div className="input-field">
-                <i className="fas fa-envelope" />
-                <input type="email" name="email" placeholder="Email" />
-              </div>
-              <div className="input-field">
-                <i className="fas fa-regular fa-graduation-cap" />
-                <input type="text" name="college" placeholder="College" />
+                <input
+                  type="text"
+                  name="metamaskid"
+                  placeholder="Metamask ID"
+                />
               </div>
               <div className="input-field">
                 <i className="fas fa-lock" />
