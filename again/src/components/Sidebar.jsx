@@ -41,7 +41,7 @@ const Sidebar = () => {
     <aside id="sidebar" className="sidebar">
       <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
-          <a className="nav-link collapsed" href="index.html">
+          <a className="nav-link collapsed" href="/">
             <i className="bi bi-grid"></i>
             <span>Dashboard</span>
           </a>
@@ -88,14 +88,14 @@ const Sidebar = () => {
           </ul>
         </li>
         <li className="nav-item">
-          <a className="nav-link collapsed" href="charts.html">
+          <a className="nav-link collapsed" href="/">
             <i className="bi bi-bar-chart"></i>
             <span>Charts</span>
           </a>
         </li>
 
         <li className="nav-item">
-          <a className="nav-link collapsed" href="users-profile.html">
+          <a className="nav-link collapsed" href="/">
             <i className="bi bi-person"></i>
             <span>Profile</span>
           </a>
