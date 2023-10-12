@@ -1,0 +1,144 @@
+import React, { useEffect } from "react";
+
+const Sidebar = () => {
+  useEffect(() => {
+    if (document.querySelector(".toggle-sidebar-btn")) {
+      document
+        .querySelector(".toggle-sidebar-btn")
+        .addEventListener("click", toggleSidebar);
+    }
+
+    if (document.querySelector(".search-bar-toggle")) {
+      document
+        .querySelector(".search-bar-toggle")
+        .addEventListener("click", toggleSearchBar);
+    }
+
+    return () => {
+      if (document.querySelector(".toggle-sidebar-btn")) {
+        document
+          .querySelector(".toggle-sidebar-btn")
+          .removeEventListener("click", toggleSidebar);
+      }
+
+      if (document.querySelector(".search-bar-toggle")) {
+        document
+          .querySelector(".search-bar-toggle")
+          .removeEventListener("click", toggleSearchBar);
+      }
+    };
+  }, []);
+
+  const toggleSidebar = () => {
+    document.querySelector("body").classList.toggle("toggle-sidebar");
+  };
+
+  const toggleSearchBar = () => {
+    document.querySelector(".search-bar").classList.toggle("search-bar-show");
+  };
+
+  return (
+    <aside id="sidebar" className="sidebar">
+      <ul className="sidebar-nav" id="sidebar-nav">
+        <li className="nav-item">
+          <a className="nav-link" href="index.html">
+            <i className="bi bi-grid"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="add-medicine.html">
+            <i className="bi bi-grid"></i>
+            <span>Add Medicine</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="search-medicine.html">
+            <i className="bi bi-grid"></i>
+            <span>Search Medicine</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link collapsed"
+            data-bs-toggle="collapse"
+            href="#medicine-details"
+          >
+            <i className="bi bi-layout-text-window-reverse"></i>
+            <span>Medicine Details</span>
+            <i className="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            className="nav-content collapse"
+            id="medicine-details"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="active-chain.html">
+                <i className="bi bi-circle"></i>
+                <span>Active Chain</span>
+              </a>
+            </li>
+            <li>
+              <a href="completed-chain.html">
+                <i className="bi bi-circle"></i>
+                <span>Completed Chain</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="charts.html">
+            <i className="bi bi-bar-chart"></i>
+            <span>Charts</span>
+          </a>
+        </li>
+        <li className="nav-heading">Pages</li>
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="users-profile.html">
+            <i className="bi bi-person"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="pages-faq.html">
+            <i className="bi bi-question-circle"></i>
+            <span>F.A.Q</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="pages-contact.html">
+            <i className="bi bi-envelope"></i>
+            <span>Contact</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="pages-register.html">
+            <i className="bi bi-card-list"></i>
+            <span>Register</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="pages-login.html">
+            <i className="bi bi-box-arrow-in-right"></i>
+            <span>Login</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="pages-error-404.html">
+            <i className="bi bi-dash-circle"></i>
+            <span>Error 404</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="pages-blank.html">
+            <i className="bi bi-file-earmark"></i>
+            <span>Blank</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+  );
+};
+
+export default Sidebar;
