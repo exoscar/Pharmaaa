@@ -4,6 +4,7 @@ import {
   useContract,
   useMetamask,
   useContractWrite,
+  useContractRead,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 
@@ -13,6 +14,7 @@ export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
     "0x47f0F482fb4EC4DfE827A2E8AfC32bae48F5510d"
   );
+
   const { mutateAsync: addMedicine } = useContractWrite(
     contract,
     "addMedicine"
@@ -44,6 +46,18 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
+  const getMedicine = async (NDC) => {
+    try {
+      // const data = await contract.getMedicine(NDC);
+      const data = await contract.call("getMedicine", [NDC]);
+      return data;
+      console.log(data);
+    } catch (error) {
+      console.log("Contract call failed", error);
+      return 0;
+    }
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -51,6 +65,7 @@ export const StateContextProvider = ({ children }) => {
         contract,
         connect,
         addMedicine: publishMedicine,
+        getMedicine,
       }}
     >
       {children}

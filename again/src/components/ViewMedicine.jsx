@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context";
-
+import { useParams } from "react-router-dom";
+import { utils } from "ethers";
 const ViewMedicine = () => {
+  const { getMedicine, address, connect, contract } = useStateContext();
+  const [data, setData] = useState({});
+  if (address) {
+    console.log("Address", address);
+  } else {
+    connect();
+  }
+  const { NDC } = useParams();
+  const iNDC = parseInt(NDC);
+  const getty = async () => {
+    try {
+      const data = await contract.call("getMedicine", [iNDC]);
+      console.log(data);
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getty();
+
+  const status = data.status ? utils.formatUnits(data.status, 0) : "";
+  const nationalDrugCode = data.NationalDrugCode
+    ? utils.formatUnits(data.NationalDrugCode, 0)
+    : "";
+
+  function stry(conditions) {
+    if (Array.isArray(conditions)) {
+      return conditions.join(", ");
+    } else if (typeof conditions === "string") {
+      return conditions;
+    } else {
+      return "No conditions found.";
+    }
+  }
+
   return (
     <main id="main" className="main">
       <div className="pagetitle">
@@ -19,40 +56,40 @@ const ViewMedicine = () => {
                     className="tab-pane fade show active profile-overview"
                     id="profile-overview"
                   >
-                    <h5 className="card-title">About</h5>
-                    <p className="small fst-italic">
-                      Sunt est soluta temporibus accusantium neque nam maiores
-                      cumque temporibus. Tempora libero non est unde veniam est
-                      qui dolor. Ut sunt iure rerum quae quisquam autem eveniet
-                      perspiciatis odit. Fuga sequi sed ea saepe at unde.
-                    </p>
-
                     <h5 className="card-title">Medicine Details</h5>
 
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">
                         Medicine Name
                       </div>
-                      <div className="col-lg-9 col-md-8">Paracetamol</div>
+                      <div className="col-lg-9 col-md-8">
+                        {data.MedicineName}
+                      </div>
                     </div>
 
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">
                         National Drug Code
                       </div>
-                      <div className="col-lg-9 col-md-8">45216</div>
+                      <div className="col-lg-9 col-md-8">
+                        {nationalDrugCode}
+                      </div>
                     </div>
 
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">Conditions</div>
-                      <div className="col-lg-9 col-md-8">20-40°C, 30%</div>
+                      <div className="col-lg-9 col-md-8">
+                        {stry(data.Conditions)}
+                      </div>
                     </div>
 
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">
                         Manufacturer
                       </div>
-                      <div className="col-lg-9 col-md-8">Micro Labs</div>
+                      <div className="col-lg-9 col-md-8">
+                        {data.Manufacturer}
+                      </div>
                     </div>
 
                     <div className="row">
@@ -60,34 +97,38 @@ const ViewMedicine = () => {
                         Side Effects
                       </div>
                       <div className="col-lg-9 col-md-8">
-                        Dry eyes, oral ulcers
+                        {stry(data.sideEffects)}
                       </div>
                     </div>
 
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">Expiry Date</div>
-                      <div className="col-lg-9 col-md-8">12/10/2025</div>
+                      <div className="col-lg-9 col-md-8">{data.ExpiryDate}</div>
                     </div>
 
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">
                         Manufacturing Date
                       </div>
-                      <div className="col-lg-9 col-md-8">12/10/2023</div>
+                      <div className="col-lg-9 col-md-8">
+                        {data.ManufacturingDate}
+                      </div>
                     </div>
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">
                         Batch Number
                       </div>
-                      <div className="col-lg-9 col-md-8">120AQ34</div>
+                      <div className="col-lg-9 col-md-8">
+                        {data.BatchNumber}
+                      </div>
                     </div>
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">MRP</div>
-                      <div className="col-lg-9 col-md-8">45.965</div>
+                      <div className="col-lg-9 col-md-8">{data.Price}</div>
                     </div>
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">Status</div>
-                      <div className="col-lg-9 col-md-8">Safe to consume</div>
+                      <div className="col-lg-9 col-md-8">{status}</div>
                     </div>
                   </div>
                 </div>

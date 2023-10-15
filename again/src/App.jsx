@@ -13,14 +13,14 @@ const App = () => {
   useEffect(() => {
     // Define the script elements to load
     const scriptElements = [
-      "assets/vendor/apexcharts/apexcharts.min.js",
-      "assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
-      "assets/vendor/chart.js/chart.umd.js",
-      "assets/vendor/echarts/echarts.min.js",
-      "assets/vendor/quill/quill.min.js",
-      "assets/vendor/simple-datatables/simple-datatables.js",
-      "assets/vendor/tinymce/tinymce.min.js",
-      "assets/vendor/php-email-form/validate.js",
+      "/assets/vendor/apexcharts/apexcharts.min.js",
+      "/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+      "/assets/vendor/chart.js/chart.umd.js",
+      "/assets/vendor/echarts/echarts.min.js",
+      "/assets/vendor/quill/quill.min.js",
+      "/assets/vendor/simple-datatables/simple-datatables.js",
+      "/assets/vendor/tinymce/tinymce.min.js",
+      "/assets/vendor/php-email-form/validate.js",
     ];
 
     // Load the script elements dynamically
@@ -161,7 +161,7 @@ const App = () => {
           }
         />
         <Route
-          path="/viewMedicine"
+          path="/viewMedicine/:NDC"
           element={
             <div>
               <STLayout /> <ViewMedicine />
