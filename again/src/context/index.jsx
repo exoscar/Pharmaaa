@@ -11,8 +11,11 @@ import { ethers } from "ethers";
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
+  // const { contract } = useContract(
+  //   "0x47f0F482fb4EC4DfE827A2E8AfC32bae48F5510d"
+  // );
   const { contract } = useContract(
-    "0x47f0F482fb4EC4DfE827A2E8AfC32bae48F5510d"
+    "0x31b6c54864a377BAd1DBb5e0144785b517D784AC"
   );
 
   const { mutateAsync: addMedicine } = useContractWrite(

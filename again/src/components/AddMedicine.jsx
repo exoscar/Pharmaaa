@@ -13,7 +13,7 @@ const AddMedicine = () => {
     NationalDrugCode: 0,
     Conditions: "",
     Quantity: "",
-    Status: 0,
+    Status: "Ideal/Trustworthy",
     Ingredients: "",
     SideEffects: "",
     ExpiryDate: "",

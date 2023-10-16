@@ -24,7 +24,7 @@ const ViewMedicine = () => {
 
   getty();
 
-  const status = data.status ? utils.formatUnits(data.status, 0) : "";
+  // const status = data.status ? utils.formatUnits(data.status, 0) : "";
   const nationalDrugCode = data.NationalDrugCode
     ? utils.formatUnits(data.NationalDrugCode, 0)
     : "";
@@ -128,7 +128,7 @@ const ViewMedicine = () => {
                     </div>
                     <div className="row">
                       <div className="col-lg-3 col-md-4 label">Status</div>
-                      <div className="col-lg-9 col-md-8">{status}</div>
+                      <div className="col-lg-9 col-md-8">{data.status}</div>
                     </div>
                   </div>
                 </div>

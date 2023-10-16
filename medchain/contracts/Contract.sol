@@ -7,9 +7,10 @@ contract MedicineContract {
         string MedicineName;
         uint256 NationalDrugCode;
         string[] Conditions;
+     
         address Manufacturer;
         string Quantity;
-        uint256 status;
+        string status;
         MedicineDetails medicineDetails; // Use the MedicineDetails struct
     }
 
@@ -26,7 +27,7 @@ contract MedicineContract {
     uint256 public medicineCount;
 
     event MedicineAdded(uint256 indexed NationalDrugCode, string MedicineName);
-    event MedicineUpdated(uint256 indexed NationalDrugCode, string MedicineName);
+    event MedicineUpdated(uint256 indexed NationalDrugCode);
 
 
     function addMedicine(
@@ -34,9 +35,10 @@ contract MedicineContract {
         string memory _MedicineName,
         uint256 _NationalDrugCode,
         string[] memory _Conditions,
+        
         address  _Manufacturer,
         string memory _Quantity,
-        uint256 _status,
+        string memory _status,
         string[] memory _Ingredients,
         string[] memory _sideEffects,
         string memory _ExpiryDate,
@@ -51,6 +53,7 @@ contract MedicineContract {
             _MedicineName,
             _NationalDrugCode,
             _Conditions,
+         
             _Manufacturer,
             _Quantity,
             _status
@@ -73,19 +76,18 @@ contract MedicineContract {
     }
 
  function updateMedicine(
-        string memory _MedicineName,
+       
         uint256 _NationalDrugCode,  
-        string[] memory _Conditions,
-        uint256 _status
+        string memory _status
     ) public {
         require(medicines[_NationalDrugCode].NationalDrugCode != 0, "Medicine with this NDC does not exist");
 
         Medicine storage existingMedicine = medicines[_NationalDrugCode];
-        existingMedicine.MedicineName = _MedicineName;
-        existingMedicine.Conditions = _Conditions;
+        
+       
         existingMedicine.status = _status;
- 
-        emit MedicineUpdated(_NationalDrugCode, _MedicineName);
+      
+        emit MedicineUpdated(_NationalDrugCode);
     }
 
 
@@ -94,9 +96,10 @@ function getMedicine(uint256 _NationalDrugCode) public view returns (
     string memory MedicineName,
     uint256 NationalDrugCode,
     string[] memory Conditions,
+  
     address  Manufacturer,
     string memory Quantity,
-    uint256 status,
+    string memory status,
     string[] memory Ingredients,
     string[] memory sideEffects,
     string memory ExpiryDate,
@@ -114,6 +117,7 @@ function getMedicine(uint256 _NationalDrugCode) public view returns (
         medicine.MedicineName,
         medicine.NationalDrugCode,
         medicine.Conditions,
+        
         medicine.Manufacturer,
         medicine.Quantity,
         medicine.status,
@@ -132,15 +136,17 @@ function getMedicine(uint256 _NationalDrugCode) public view returns (
         string memory _MedicineName,
         uint256 _NationalDrugCode,
         string[] memory _Conditions,
+       
         address  _Manufacturer,
         string memory _Quantity,
-        uint256 _status
+        string memory _status
     ) internal pure returns (Medicine memory) {
         return Medicine({
             // owner: _owner,
             MedicineName: _MedicineName,
             NationalDrugCode: _NationalDrugCode,
             Conditions: _Conditions,
+           
             Manufacturer: _Manufacturer,
             Quantity: _Quantity,
             status: _status,
