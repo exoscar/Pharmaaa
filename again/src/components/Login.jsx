@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 const Login = () => {
   const weurl = "http://localhost:5000/auth";
+
   const history = useNavigate();
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [companyName, setCompanyName] = useState("");

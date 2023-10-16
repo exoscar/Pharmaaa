@@ -8,9 +8,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://Kurama:kurama@macluster.ul1qntu.mongodb.net/";
-const dbName = "Pharma";
-const CollectionName = "Pharma";
+// const uri = "mongodb+srv://Kurama:kurama@macluster.ul1qntu.mongodb.net/";
+const uri = process.env.MONGODB_URI;
+// const dbName = "Pharma";
+// const CollectionName = "Pharma";
+const dbName = process.env.DB_NAME;
+const collwctionName = process.env.COLLECTION_NAME;
 async function connectToDb() {
   try {
     const client = new MongoClient(uri, { useNewUrlParser: true });
