@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const bcrypt = require("bcrypt");
 const cors = require("cors");
 
 app.use(cors());
@@ -8,12 +8,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const { MongoClient } = require("mongodb");
-// const uri = "mongodb+srv://Kurama:kurama@macluster.ul1qntu.mongodb.net/";
-const uri = process.env.MONGODB_URI;
-// const dbName = "Pharma";
-// const CollectionName = "Pharma";
-const dbName = process.env.DB_NAME;
-const collwctionName = process.env.COLLECTION_NAME;
+const uri = "mongodb+srv://Kurama:kurama@macluster.ul1qntu.mongodb.net/";
+const dbName = "Pharma";
+const CollectionName = "Pharma";
+
 async function connectToDb() {
   try {
     const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -35,10 +33,17 @@ async function connectToDb() {
           const check = await collection.findOne({
             // Changed findone to findOne
             metamaskId: metamaskId,
-            password: password,
           });
           if (check) {
-            res.json("exists");
+            const passwordMatch = await bcrypt.compare(
+              password,
+              check.password
+            );
+            if (passwordMatch) {
+              res.json("exists");
+            } else {
+              res.json("Wrong Password");
+            }
           } else {
             res.json("not exists");
           }
@@ -47,11 +52,12 @@ async function connectToDb() {
         }
       } else {
         const { companyName, metamaskId, password, confirmPassword } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
         if (password === confirmPassword) {
           const data = {
             companyName: companyName,
             metamaskId: metamaskId,
-            password: password,
+            password: hashedPassword,
           };
           try {
             const check = await collection.findOne({ metamaskId: metamaskId });
@@ -79,56 +85,3 @@ async function connectToDb() {
   }
 }
 connectToDb();
-
-// app.get("/", (req, res) => {
-//   // Add your route logic here
-//   res.json("Welcome to the API");
-// });
-
-// app.post("/auth", async (req, res) => {
-//   const total = Object.keys(req.body).length;
-//   if (total == 2) {
-//     const { metamaskId, password } = req.body;
-//     try {
-//       const check = await collection.findOne({
-//         // Changed findone to findOne
-//         metamaskId: metamaskId,
-//         password: password,
-//       });
-//       if (check) {
-//         res.json("exists");
-//       } else {
-//         res.json("not exists");
-//       }
-//     } catch (error) {
-//       res.json("not exists");
-//     }
-//   } else {
-//     const { companyName, metamaskId, password, confirmPassword } = req.body;
-//     if (password === confirmPassword) {
-//       const data = {
-//         companyName: companyName,
-//         metamaskId: metamaskId,
-//         password: password,
-//       };
-//       try {
-//         const check = await collection.findOne({ metamaskId: metamaskId });
-//         if (check) {
-//           res.json("exists");
-//         } else {
-//           res.json("not exists");
-//           await collection.insertMany([data]);
-//         }
-//       } catch (error) {
-//         res.json("not exists");
-//       }
-//     } else {
-//       res.json("passwords do not match");
-//     }
-//   }
-// });
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });

@@ -19,6 +19,8 @@ const Login = () => {
         .then((res) => {
           if (res.data == "exists") {
             history("/dashboard", { state: { id: metamaskId } });
+          } else if (res.data == "Wrong Password") {
+            alert("Wrong Password");
           } else if (res.data == "not exists") {
             alert("User not found");
           }
