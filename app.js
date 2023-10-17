@@ -23,7 +23,6 @@ async function connectToDb() {
     console.log("Connected to MongoDB");
 
     app.get("/", (req, res) => {
-      // Add your route logic here
       res.json("Welcome to the API");
     });
 
@@ -33,7 +32,6 @@ async function connectToDb() {
         const { metamaskId, password } = req.body;
         try {
           const check = await collection.findOne({
-            // Changed findone to findOne
             metamaskId: metamaskId,
           });
           if (check) {
@@ -79,16 +77,17 @@ async function connectToDb() {
     });
 
     app.post("/sendTruckDetails", async (req, res) => {
-      const { RegistrationNumber, NationalDrugCode, From, To } = req.body;
+      const { RegistrationNumber, StripID, From, To, address } = req.body;
       const status = "0";
       const Tdata = {
         RegistrationNumber: RegistrationNumber,
-        NationalDrugCode: NationalDrugCode,
+        StripID: StripID,
         from: From,
         to: To,
         status: status,
+        address: address,
       };
-      Tdata.NationalDrugCode = Tdata.NationalDrugCode.map(Number);
+      Tdata.StripID = Tdata.StripID.map(Number);
       console.log(Tdata);
       try {
         const resultt = await TruckDetails.find({
@@ -104,6 +103,10 @@ async function connectToDb() {
         res.json({ message: "Error occurred" });
       }
     });
+
+    // app.post('/addMmedicine', async (req, res) => {
+    //   const { Medicinines ,BatchNumber,tempmin,tempmax,}
+    // });
 
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {

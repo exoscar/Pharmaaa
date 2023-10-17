@@ -15,7 +15,7 @@ export const StateContextProvider = ({ children }) => {
   //   "0x47f0F482fb4EC4DfE827A2E8AfC32bae48F5510d"
   // );
   const { contract } = useContract(
-    "0x31b6c54864a377BAd1DBb5e0144785b517D784AC"
+    "0x426Da94ddA44D8d4A34D694FBf4De4D71867C33A"
   );
 
   const { mutateAsync: addMedicine } = useContractWrite(
@@ -30,7 +30,7 @@ export const StateContextProvider = ({ children }) => {
       const data = await addMedicine({
         args: [
           form.MedicineName,
-          form.NationalDrugCode,
+          form.StripID,
           [form.Conditions],
           address,
           form.Quantity,

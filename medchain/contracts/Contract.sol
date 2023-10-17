@@ -5,7 +5,7 @@ contract MedicineContract {
     struct Medicine {
         // address owner;
         string MedicineName;
-        uint256 NationalDrugCode;
+        uint256 StripID;
         string[] Conditions;
      
         address Manufacturer;
@@ -26,14 +26,14 @@ contract MedicineContract {
     mapping(uint256 => Medicine) public medicines;
     uint256 public medicineCount;
 
-    event MedicineAdded(uint256 indexed NationalDrugCode, string MedicineName);
-    event MedicineUpdated(uint256 indexed NationalDrugCode);
+    event MedicineAdded(uint256 indexed StripID, string MedicineName);
+    event MedicineUpdated(uint256 indexed StripID);
 
 
     function addMedicine(
         // address _owner,
         string memory _MedicineName,
-        uint256 _NationalDrugCode,
+        uint256 _StripID,
         string[] memory _Conditions,
         
         address  _Manufacturer,
@@ -46,12 +46,12 @@ contract MedicineContract {
         string memory _BatchNumber,
         string memory _Price
     ) public {
-        require(medicines[_NationalDrugCode].NationalDrugCode == 0, "Medicine with this NDC already exists");
+        require(medicines[_StripID].StripID == 0, "Medicine with this NDC already exists");
 
         Medicine memory newMedicine = createMedicine(
             // _owner,
             _MedicineName,
-            _NationalDrugCode,
+            _StripID,
             _Conditions,
          
             _Manufacturer,
@@ -69,32 +69,32 @@ contract MedicineContract {
         );
 
         newMedicine.medicineDetails = details;
-        medicines[_NationalDrugCode] = newMedicine;
+        medicines[_StripID] = newMedicine;
         medicineCount++;
 
-        emit MedicineAdded(_NationalDrugCode, _MedicineName);
+        emit MedicineAdded(_StripID, _MedicineName);
     }
 
  function updateMedicine(
        
-        uint256 _NationalDrugCode,  
+        uint256 _StripID,  
         string memory _status
     ) public {
-        require(medicines[_NationalDrugCode].NationalDrugCode != 0, "Medicine with this NDC does not exist");
+        require(medicines[_StripID].StripID != 0, "Medicine with this NDC does not exist");
 
-        Medicine storage existingMedicine = medicines[_NationalDrugCode];
+        Medicine storage existingMedicine = medicines[_StripID];
         
        
         existingMedicine.status = _status;
       
-        emit MedicineUpdated(_NationalDrugCode);
+        emit MedicineUpdated(_StripID);
     }
 
 
-function getMedicine(uint256 _NationalDrugCode) public view returns (
+function getMedicine(uint256 _StripID) public view returns (
     // address owner,
     string memory MedicineName,
-    uint256 NationalDrugCode,
+    uint256 StripID,
     string[] memory Conditions,
   
     address  Manufacturer,
@@ -107,15 +107,15 @@ function getMedicine(uint256 _NationalDrugCode) public view returns (
     string memory BatchNumber,
     string memory Price
 ) {
-    require(medicines[_NationalDrugCode].NationalDrugCode != 0, "Medicine with this NDC does not exist");
+    require(medicines[_StripID].StripID != 0, "Medicine with this NDC does not exist");
 
-    Medicine storage medicine = medicines[_NationalDrugCode];
+    Medicine storage medicine = medicines[_StripID];
     MedicineDetails storage details = medicine.medicineDetails;
 
     return (
         // medicine.owner,
         medicine.MedicineName,
-        medicine.NationalDrugCode,
+        medicine.StripID,
         medicine.Conditions,
         
         medicine.Manufacturer,
@@ -134,7 +134,7 @@ function getMedicine(uint256 _NationalDrugCode) public view returns (
     function createMedicine(
         // address _owner,
         string memory _MedicineName,
-        uint256 _NationalDrugCode,
+        uint256 _StripID,
         string[] memory _Conditions,
        
         address  _Manufacturer,
@@ -144,7 +144,7 @@ function getMedicine(uint256 _NationalDrugCode) public view returns (
         return Medicine({
             // owner: _owner,
             MedicineName: _MedicineName,
-            NationalDrugCode: _NationalDrugCode,
+            StripID: _StripID,
             Conditions: _Conditions,
            
             Manufacturer: _Manufacturer,

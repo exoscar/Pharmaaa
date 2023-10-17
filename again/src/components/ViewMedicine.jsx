@@ -25,9 +25,7 @@ const ViewMedicine = () => {
   getty();
 
   // const status = data.status ? utils.formatUnits(data.status, 0) : "";
-  const nationalDrugCode = data.NationalDrugCode
-    ? utils.formatUnits(data.NationalDrugCode, 0)
-    : "";
+  const StripID = data.StripID ? utils.formatUnits(data.StripID, 0) : "";
 
   function stry(conditions) {
     if (Array.isArray(conditions)) {
@@ -68,12 +66,8 @@ const ViewMedicine = () => {
                     </div>
 
                     <div className="row">
-                      <div className="col-lg-3 col-md-4 label">
-                        National Drug Code
-                      </div>
-                      <div className="col-lg-9 col-md-8">
-                        {nationalDrugCode}
-                      </div>
+                      <div className="col-lg-3 col-md-4 label">Strip ID</div>
+                      <div className="col-lg-9 col-md-8">{StripID}</div>
                     </div>
 
                     <div className="row">

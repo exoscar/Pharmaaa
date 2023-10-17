@@ -10,7 +10,7 @@ const AddMedicine = () => {
   }
   const [formData, setFormData] = useState({
     MedicineName: "",
-    NationalDrugCode: 0,
+    StripID: 0,
     Conditions: "",
     Quantity: "",
     Status: "Ideal/Trustworthy",
@@ -43,6 +43,7 @@ const AddMedicine = () => {
     await addMedicine({
       ...formData,
     });
+
     console.log(formData);
   };
 
@@ -81,8 +82,8 @@ const AddMedicine = () => {
                         className="form-control"
                         id="floatingDrugCode"
                         placeholder="National Drug Code"
-                        name="NationalDrugCode"
-                        value={formData.NationalDrugCode}
+                        name="StripID"
+                        value={formData.StripID}
                         onChange={handleInputChange}
                       />
                       <label htmlFor="floatingDrugCode">

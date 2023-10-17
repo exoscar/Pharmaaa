@@ -1,18 +1,26 @@
 import React, { useState } from "react";
-
+import { useStateContext } from "../context";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 const AddTruck = () => {
+  const { connect, address } = useStateContext();
+
+  if (address) {
+    console.log("Address", address);
+  } else {
+    connect();
+  }
   const history = useNavigate();
   const [formData, setFormData] = useState({
     RegistrationNumber: "",
-    NationalDrugCode: [],
+    StripID: [],
     From: "",
     To: "",
   });
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    if (name === "NationalDrugCode") {
+    if (name === "StripID") {
       setFormData({
         ...formData,
         [name]: value.split(",").map((item) => item.trim()), // Split the string into an array and trim whitespace
@@ -32,9 +40,10 @@ const AddTruck = () => {
       await axios
         .post("http://localhost:5000/sendTruckDetails", {
           RegistrationNumber: formData.RegistrationNumber,
-          NationalDrugCode: formData.NationalDrugCode,
+          StripID: formData.StripID,
           From: formData.From,
           To: formData.To,
+          address: address,
         })
         .then((res) => {
           if (res.data == "exists") {
@@ -87,13 +96,11 @@ const AddTruck = () => {
                         className="form-control"
                         id="floatingDrugCode"
                         placeholder="National Drug Code"
-                        name="NationalDrugCode"
-                        value={formData.NationalDrugCode}
+                        name="StripID"
+                        value={formData.StripID}
                         onChange={handleInputChange}
                       />
-                      <label htmlFor="floatingDrugCode">
-                        National Drug Code
-                      </label>
+                      <label htmlFor="floatingDrugCode">Strip ID</label>
                     </div>
                   </div>
 
