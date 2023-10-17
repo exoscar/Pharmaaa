@@ -3,39 +3,41 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 const AddTruck = () => {
+  const history = useNavigate();
   const [formData, setFormData] = useState({
     RegistrationNumber: "",
     NationalDrugCode: [],
     From: "",
     To: "",
   });
-  //   const handleInputChange = (event) => {
-  //     const { name, value } = event.target;
-  //     if (name === "NationalDrugCode") {
-  //       setFormData({
-  //         ...formData,
-  //         [name]: value.split(","),
-  //       });
-  //     } else {
-  //       setFormData({
-  //         ...formData,
-  //         [name]: value,
-  //       });
-  //     }
-  //   };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: name === "NationalDrugCode" ? value.split(",") : value,
-    });
+    if (name === "NationalDrugCode") {
+      setFormData({
+        ...formData,
+        [name]: value.split(",").map((item) => item.trim()), // Split the string into an array and trim whitespace
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
+
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: name === "NationalDrugCode" ? value.split(",") : value,
+  //   });
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await axios
-        .post("http://localhost:5000/addTruckDetails", formData)
+        .post("http://localhost:5000/addTruckDetails", { formData })
         .then((res) => {
           if (res.data == "exists") {
             alert("Truck Already Assigned");
@@ -65,7 +67,7 @@ const AddTruck = () => {
               <div className="card-body">
                 <h5 className="card-title"></h5>
 
-                <form className="row g-3" onSubmit={handleSubmit}>
+                <form className="row g-3" method="POST" onSubmit={handleSubmit}>
                   <div className="col-md-6">
                     <div className="form-floating">
                       <input
@@ -127,7 +129,11 @@ const AddTruck = () => {
                   </div>
 
                   <div className="text-center">
-                    <button type="submit" className="btn btn-primary">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      onClick={handleSubmit}
+                    >
                       Submit
                     </button>
                     <button type="reset" className="btn btn-secondary">

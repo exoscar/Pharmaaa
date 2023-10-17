@@ -4,3 +4,4 @@ export { default as AddMedicine } from "./AddMedicine";
 export { default as ViewMedicine } from "./ViewMedicine";
 export { default as Login } from "./Login";
 export { default as AddTruck } from "./AddTruck";
+export { default as Dashboard } from "./Dashboard";

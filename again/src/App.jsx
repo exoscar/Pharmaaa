@@ -7,7 +7,7 @@ import {
   AddMedicine,
   ViewMedicine,
   Login,
-  AddTruck,
+  Dashboard,
 } from "./components";
 
 const App = () => {
@@ -152,20 +152,20 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<STLayout />} />
+        <Route
+          path="/dashboard"
+          element={
+            <div>
+              <STLayout />
+              <Dashboard />{" "}
+            </div>
+          }
+        />
         <Route
           path="/addMedicine"
           element={
             <div>
               <STLayout /> <AddMedicine />
-            </div>
-          }
-        />
-        <Route
-          path="/addTruckDetails"
-          element={
-            <div>
-              <STLayout /> <AddTruck />
             </div>
           }
         />
@@ -183,35 +183,3 @@ const App = () => {
 };
 
 export default App;
-
-// useEffect(() => {
-//   // Create script elements and load the external scripts
-//   const scriptElements = [
-//     "assets/vendor/apexcharts/apexcharts.min.js",
-//     "assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
-//     "assets/vendor/chart.js/chart.umd.js",
-//     "assets/vendor/echarts/echarts.min.js",
-//     "assets/vendor/quill/quill.min.js",
-//     "assets/vendor/simple-datatables/simple-datatables.js",
-//     "assets/vendor/tinymce/tinymce.min.js",
-//     "assets/vendor/php-email-form/validate.js",
-//   ];
-
-//   scriptElements.forEach((src) => {
-//     const script = document.createElement("script");
-//     script.src = src;
-//     script.async = true;
-//     document.body.appendChild(script);
-//   });
-
-//   // Clean up: remove the scripts when the component unmounts
-//   return () => {
-//     scriptElements.forEach((src) => {
-//       const script = document.querySelector(`script[src="${src}"`);
-//       if (script) {
-//         script.remove();
-//       }
-//     });
-//   };
-
-// }, []);
