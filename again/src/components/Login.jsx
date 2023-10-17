@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../public/assets/css/Login.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 const Login = () => {
   const weurl = "http://localhost:5000/auth";
-
+  axios.defaults.withCredentials = true;
   const history = useNavigate();
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [metamaskId, setMetamaskId] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState("");
   async function handleSignIn(e) {
     e.preventDefault();
     try {
@@ -67,6 +68,15 @@ const Login = () => {
   const handleSignInClick = () => {
     setIsSignUpMode(false);
   };
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/auth").then((res) => {
+      if (res.data.loggedIn == true) {
+        setLoginStatus(res.data.user[0]);
+        history("/dashboard", { state: { id: metamaskId } });
+      }
+    });
+  }, []);
 
   return (
     <div className="Loginn">

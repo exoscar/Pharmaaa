@@ -100,6 +100,13 @@ const Sidebar = () => {
             <span>Profile</span>
           </a>
         </li>
+
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="/addTruckDetails">
+            <i className="bi bi-person"></i>
+            <span>Add Truck Details</span>
+          </a>
+        </li>
       </ul>
     </aside>
   );
