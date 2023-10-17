@@ -11,6 +11,7 @@ const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://Kurama:kurama@macluster.ul1qntu.mongodb.net/";
 const dbName = "Pharma";
 const CollectionName = "Pharma";
+const trcCollection = "TruckData";
 
 async function connectToDb() {
   try {
@@ -18,6 +19,7 @@ async function connectToDb() {
     await client.connect();
     const db = client.db(dbName);
     const collection = db.collection(CollectionName);
+    const TruckDetails = db.collection(trcCollection);
     console.log("Connected to MongoDB");
 
     app.get("/", (req, res) => {
@@ -73,6 +75,33 @@ async function connectToDb() {
         } else {
           res.json("passwords do not match");
         }
+      }
+    });
+
+    app.post("/sendTruckDetails", async (req, res) => {
+      const { RegistrationNumber, NationalDrugCode, From, To } = req.body;
+      const status = "0";
+      const Tdata = {
+        RegistrationNumber: RegistrationNumber,
+        NationalDrugCode: NationalDrugCode,
+        from: From,
+        to: To,
+        status: status,
+      };
+      Tdata.NationalDrugCode = Tdata.NationalDrugCode.map(Number);
+      console.log(Tdata);
+      try {
+        const resultt = await TruckDetails.find({
+          RegistrationNumber: RegistrationNumber,
+        });
+        if (resultt && resultt.length > 0) {
+          res.json("exists");
+        } else {
+          await TruckDetails.insertMany([Tdata]);
+          res.json("added");
+        }
+      } catch (error) {
+        res.json({ message: "Error occurred" });
       }
     });
 

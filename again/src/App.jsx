@@ -8,6 +8,7 @@ import {
   ViewMedicine,
   Login,
   Dashboard,
+  AddTruck,
 } from "./components";
 
 const App = () => {
@@ -152,6 +153,14 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/AddTruckDetails"
+          element={
+            <div>
+              <STLayout /> <AddTruck />
+            </div>
+          }
+        />
         <Route
           path="/dashboard"
           element={

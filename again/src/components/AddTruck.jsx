@@ -25,19 +25,17 @@ const AddTruck = () => {
     }
   };
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: name === "NationalDrugCode" ? value.split(",") : value,
-  //   });
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       await axios
-        .post("http://localhost:5000/addTruckDetails", { formData })
+        .post("http://localhost:5000/sendTruckDetails", {
+          RegistrationNumber: formData.RegistrationNumber,
+          NationalDrugCode: formData.NationalDrugCode,
+          From: formData.From,
+          To: formData.To,
+        })
         .then((res) => {
           if (res.data == "exists") {
             alert("Truck Already Assigned");
