@@ -6,12 +6,13 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+const Myapi = "Kurama";
 const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://Kurama:kurama@macluster.ul1qntu.mongodb.net/";
 const dbName = "Pharma";
 const CollectionName = "Pharma";
 const trcCollection = "TruckData";
+const Alertsc = "Alerts";
 
 async function connectToDb() {
   try {
@@ -20,6 +21,8 @@ async function connectToDb() {
     const db = client.db(dbName);
     const collection = db.collection(CollectionName);
     const TruckDetails = db.collection(trcCollection);
+    const Alerts = db.collection(Alertsc);
+
     console.log("Connected to MongoDB");
 
     app.get("/", (req, res) => {
@@ -87,13 +90,13 @@ async function connectToDb() {
         status: status,
         address: address,
       };
-      Tdata.StripID = Tdata.StripID.map(Number);
+      // Tdata.StripID = Tdata.StripID.map(Number);
       console.log(Tdata);
       try {
-        const resultt = await TruckDetails.find({
+        const resultt = await TruckDetails.findOne({
           RegistrationNumber: RegistrationNumber,
         });
-        if (resultt && resultt.length > 0) {
+        if (resultt) {
           res.json("exists");
         } else {
           await TruckDetails.insertMany([Tdata]);
@@ -104,9 +107,95 @@ async function connectToDb() {
       }
     });
 
-    // app.post('/addMmedicine', async (req, res) => {
-    //   const { Medicinines ,BatchNumber,tempmin,tempmax,}
+    // app.post("/getTemp", async (req, res) => {
+    //   const { temperature, humidity, RegistrationNumber } = req.body;
+    //   const apiKey = req.header("Authorization");
+
+    //   if (apiKey !== Myapi) {
+    //     res.status(401).send("Unauthorized");
+    //     return;
+    //   }
+
+    //   try {
+    //     const resultt = await TruckDetails.find({
+    //       RegistrationNumber: RegistrationNumber,
+    //       status: "0",
+    //     });
+    //     if (resultt.length > 0) {
+    //       const StripID = resultt[0].StripID;
+    //       console.log(StripID);
+    //     } else {
+    //       console.log("No matching results found.");
+    //     }
+
+    //     const chk = await Alerts.find({
+    //       RegistrationNumber: RegistrationNumber,
+    //       status: "0",
+    //     });
+    //     if (chk && chk.length > 0) {
+    //       res.json("exists");
+    //     } else {
+    //       const Edata = {
+    //         temperature: temperature,
+    //         humidity: humidity,
+    //         RegistrationNumber: RegistrationNumber,
+    //         StripID: StripIDs,
+    //         status: "0",
+    //       };
+    //       await Alerts.insertMany([Edata]);
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
     // });
+    app.post("/getTemp", async (req, res) => {
+      const { temperature, humidity, RegistrationNumber } = req.body;
+      console.log(temperature, humidity, RegistrationNumber);
+      const apiKey = req.header("Authorization");
+
+      if (apiKey !== Myapi) {
+        res.status(401).send("Unauthorized");
+        return;
+      }
+
+      try {
+        const resulttt = await TruckDetails.findOne({
+          RegistrationNumber: RegistrationNumber,
+          status: "0",
+        });
+
+        if (resulttt) {
+          const StripID = resulttt.StripID; // Access StripID directly from resulttt
+          console.log(StripID);
+
+          const chk = await Alerts.findOne({
+            RegistrationNumber: RegistrationNumber,
+            status: "0",
+          });
+
+          if (chk) {
+            res.json("exists");
+          } else {
+            const Edata = {
+              temperature: temperature,
+              humidity: humidity,
+              RegistrationNumber: RegistrationNumber,
+              StripID: StripID, // Use StripID here
+              status: "0",
+            };
+
+            await Alerts.insertMany([Edata]);
+            res.json("Data inserted successfully.");
+          }
+        } else {
+          console.log("No matching results found.");
+          res.json("No matching results found.");
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(500).json("Internal Server Error");
+      }
+    });
 
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {

@@ -11,6 +11,7 @@
   "dependencies": {
     "@thirdweb-dev/react": "^3",
     "@thirdweb-dev/sdk": "^3",
+    "apexcharts": "^3.44.0",
     "axios": "^1.5.1",
     "chart.js": "^4.4.0",
     "cors": "^2.8.5",
