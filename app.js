@@ -253,17 +253,44 @@ async function connectToDb() {
     app.post("/medicines", async (req, res) => {
       const { search } = req.body;
       const ser = parseInt(search, 10);
-      console.log(typeof ser);
+      console.log(typeof search);
       try {
-        const medidata = await Medicine.find({ StripID: ser }).toArray();
-        if (medidata) {
-          console.log(medidata);
-          res.json(medidata);
+        const mdata = await Medicine.find({ StripID: ser }).toArray();
+        if (mdata) {
+          console.log(mdata);
+          res.json(mdata);
         } else {
           res.json("no data found");
         }
       } catch (error) {
         console.log(error);
+      }
+    });
+
+    app.get("/trucks", async (req, res) => {
+      try {
+        const result = await TruckDetails.find({ status: "0" }).toArray();
+        if (result) {
+          res.json(result);
+        } else {
+          res.json("No alerts found");
+        }
+      } catch (error) {
+        res.json({ message: "Error occurred" });
+      }
+    });
+
+    app.post("/trucks", async (req, res) => {
+      const { search } = req.body;
+      try {
+        const tdata = await TruckDetails.find({
+          RegistrationNumber: search,
+        }).toArray();
+        if (tdata) {
+          res.json(tdata);
+        }
+      } catch (e) {
+        console.log(e);
       }
     });
 
