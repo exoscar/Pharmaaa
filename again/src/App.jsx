@@ -9,7 +9,7 @@ import {
   Login,
   Dashboard,
   AddTruck,
-  SearchMedicine,
+  Alerts,
 } from "./components";
 
 const App = () => {
@@ -188,10 +188,10 @@ const App = () => {
           }
         />
         <Route
-          path="/searchMedicine"
+          path="/alerts"
           element={
             <div>
-              <STLayout /> <SearchMedicine />
+              <STLayout /> <Alerts />
             </div>
           }
         />

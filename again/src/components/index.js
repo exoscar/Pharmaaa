@@ -5,4 +5,4 @@ export { default as ViewMedicine } from "./ViewMedicine";
 export { default as Login } from "./Login";
 export { default as AddTruck } from "./AddTruck";
 export { default as Dashboard } from "./Dashboard";
-export { default as SearchMedicine } from "./SearchMedicine";
+export { default as Alerts } from "./Alerts";

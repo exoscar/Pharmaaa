@@ -210,6 +210,33 @@ async function connectToDb() {
       }
     });
 
+    app.get("/alerts", async (req, res) => {
+      try {
+        const result = await Alerts.find({ status: "0" }).toArray();
+        if (result) {
+          res.json(result);
+        } else {
+          res.json("No alerts found");
+        }
+      } catch (error) {
+        res.json({ message: "Error occurred" });
+      }
+    });
+
+    app.post("/alerts", async (req, res) => {
+      const { search } = req.body;
+      try {
+        const adata = await Alerts.find({
+          RegistrationNumber: search,
+        }).toArray();
+        if (adata) {
+          console.log(adata);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
