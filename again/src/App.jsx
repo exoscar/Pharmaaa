@@ -11,6 +11,7 @@ import {
   AddTruck,
   Alerts,
   SearchMedicine,
+  ViewTruck,
 } from "./components";
 
 const App = () => {
@@ -189,7 +190,7 @@ const App = () => {
           }
         />
         <Route
-          path="/searchMEdicine"
+          path="/searchMedicine"
           element={
             <div>
               <STLayout />
@@ -202,6 +203,14 @@ const App = () => {
           element={
             <div>
               <STLayout /> <Alerts />
+            </div>
+          }
+        />
+        <Route
+          path="/viewTrucks"
+          element={
+            <div>
+              <STLayout /> <ViewTruck />
             </div>
           }
         />
