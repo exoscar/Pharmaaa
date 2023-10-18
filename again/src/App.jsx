@@ -10,6 +10,7 @@ import {
   Dashboard,
   AddTruck,
   Alerts,
+  SearchMedicine,
 } from "./components";
 
 const App = () => {
@@ -184,6 +185,15 @@ const App = () => {
           element={
             <div>
               <STLayout /> <ViewMedicine />
+            </div>
+          }
+        />
+        <Route
+          path="/searchMEdicine"
+          element={
+            <div>
+              <STLayout />
+              <SearchMedicine />
             </div>
           }
         />

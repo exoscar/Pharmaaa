@@ -237,6 +237,36 @@ async function connectToDb() {
       }
     });
 
+    app.get("/medicines", async (req, res) => {
+      try {
+        const mdata = await Medicine.find({}).toArray();
+        if (mdata) {
+          res.json(mdata);
+        } else {
+          res.json("No meds found");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    app.post("/medicines", async (req, res) => {
+      const { search } = req.body;
+      const ser = parseInt(search, 10);
+      console.log(typeof search);
+      try {
+        const mdata = await Medicine.find({ StripID: ser }).toArray;
+        if (mdata) {
+          console.log(mdata);
+          res.json(mdata);
+        } else {
+          res.json("no data found");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
