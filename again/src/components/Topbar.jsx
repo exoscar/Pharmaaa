@@ -11,7 +11,7 @@ const Topbar = () => {
         <i className="bi bi-list toggle-sidebar-btn"></i>
       </div>
       {/* End Logo */}
-
+      {/* 
       <div className="search-bar">
         <form
           className="search-form d-flex align-items-center"
@@ -28,7 +28,7 @@ const Topbar = () => {
             <i className="bi bi-search"></i>
           </button>
         </form>
-      </div>
+      </div> */}
       {/* End Search Bar */}
 
       <nav className="header-nav ms-auto">

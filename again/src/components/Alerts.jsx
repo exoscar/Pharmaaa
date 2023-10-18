@@ -5,25 +5,25 @@ const Alerts = () => {
   const [search, setSearch] = useState("");
   const [alerts, setAlerts] = useState([]);
 
-  // async function handleSearch(e) {
-  //   e.preventDefault();
-  //   try {
-  //     await axios
-  //       .post("http://localhost:5000/alerts", { search })
-  //       .then((res) => {
-  //         if (res.data) {
-  //           console.log(res.data);
-  //         } else {
-  //           console.log("no data");
-  //         }
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
+  async function handleSearch(e) {
+    e.preventDefault();
+    try {
+      await axios
+        .post("http://localhost:5000/alerts", { search })
+        .then((res) => {
+          if (res.data) {
+            setAlerts(res.data);
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +42,7 @@ const Alerts = () => {
   return (
     <main id="main" className="main">
       <div className="search-bar">
-        <form className="search-form d-flex align-items-center" action="POST">
+        <form className="search-form d-flex align-items-center">
           <input
             type="text"
             name="query"
@@ -53,13 +53,15 @@ const Alerts = () => {
             }}
           />
           <div className="text-center">
-            <button
-              type="submit"
-              // onSubmit={handleSearch}
-              className="btn btn-primary"
-            >
+            <button onClick={handleSearch} className="btn btn-primary">
               Submit
             </button>
+            {/* <input
+              type="submit"
+              onClick={handleSearch}
+              className="btn"
+              defaultValue="Sign up"
+            /> */}
           </div>
         </form>
       </div>
@@ -72,16 +74,16 @@ const Alerts = () => {
               <thead>
                 <tr>
                   <th scope="col">S.No</th>
-                  <th scope="col">Medicine Name</th>
+                  <th scope="col">Registration Number</th>
                   <th scope="col">Strip ID</th>
-                  <th scope="col">Batch Number</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Temperature</th>
+                  <th scope="col">Humidity</th>
                 </tr>
               </thead>
               <tbody>
-                {alerts.map((alert) => (
+                {alerts.map((alert, i) => (
                   <tr key={alert.RegistrationNumber}>
-                    <th scope="row">1</th>
+                    <th scope="row">{i + 1}</th>
                     <td>{alert.RegistrationNumber}</td>
                     <td>
                       {alert.StripID.map((id) => (

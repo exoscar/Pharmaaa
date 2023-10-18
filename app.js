@@ -230,7 +230,7 @@ async function connectToDb() {
           RegistrationNumber: search,
         }).toArray();
         if (adata) {
-          console.log(adata);
+          res.json(adata);
         }
       } catch (e) {
         console.log(e);
