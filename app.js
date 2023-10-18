@@ -13,6 +13,7 @@ const dbName = "Pharma";
 const CollectionName = "Pharma";
 const trcCollection = "TruckData";
 const Alertsc = "Alerts";
+const Meds = "Medicine";
 
 async function connectToDb() {
   try {
@@ -22,6 +23,7 @@ async function connectToDb() {
     const collection = db.collection(CollectionName);
     const TruckDetails = db.collection(trcCollection);
     const Alerts = db.collection(Alertsc);
+    const Medicine = db.collection(Meds);
 
     console.log("Connected to MongoDB");
 
@@ -106,48 +108,6 @@ async function connectToDb() {
         res.json({ message: "Error occurred" });
       }
     });
-
-    // app.post("/getTemp", async (req, res) => {
-    //   const { temperature, humidity, RegistrationNumber } = req.body;
-    //   const apiKey = req.header("Authorization");
-
-    //   if (apiKey !== Myapi) {
-    //     res.status(401).send("Unauthorized");
-    //     return;
-    //   }
-
-    //   try {
-    //     const resultt = await TruckDetails.find({
-    //       RegistrationNumber: RegistrationNumber,
-    //       status: "0",
-    //     });
-    //     if (resultt.length > 0) {
-    //       const StripID = resultt[0].StripID;
-    //       console.log(StripID);
-    //     } else {
-    //       console.log("No matching results found.");
-    //     }
-
-    //     const chk = await Alerts.find({
-    //       RegistrationNumber: RegistrationNumber,
-    //       status: "0",
-    //     });
-    //     if (chk && chk.length > 0) {
-    //       res.json("exists");
-    //     } else {
-    //       const Edata = {
-    //         temperature: temperature,
-    //         humidity: humidity,
-    //         RegistrationNumber: RegistrationNumber,
-    //         StripID: StripIDs,
-    //         status: "0",
-    //       };
-    //       await Alerts.insertMany([Edata]);
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // });
     app.post("/getTemp", async (req, res) => {
       const { temperature, humidity, RegistrationNumber } = req.body;
       console.log(temperature, humidity, RegistrationNumber);
@@ -194,6 +154,59 @@ async function connectToDb() {
       } catch (error) {
         console.log(error);
         res.status(500).json("Internal Server Error");
+      }
+    });
+
+    app.post("/addMedicine", async (req, res) => {
+      const {
+        MedicineName,
+        StripID,
+        Conditions,
+        Quantity,
+        Ingredients,
+        SideEffects,
+        ExpiryDate,
+        ManufactureDate,
+        BatchNumber,
+        Price,
+        address,
+      } = req.body;
+      const status = "Ideal";
+      const con = Conditions.split(",");
+      console.log(con);
+      const temp = con[0].split("-");
+      const hum = con[1].split("-");
+      const Mdata = {
+        MedicineName: MedicineName,
+        StripID: StripID,
+        mintemp: temp[0],
+        maxtemp: temp[1],
+        minhumi: hum[0],
+        maxhumi: hum[1],
+        Quantity: Quantity,
+        Ingredients: Ingredients,
+        SideEffects: SideEffects,
+        ExpiryDate: ExpiryDate,
+        ManufactureDate: ManufactureDate,
+        BatchNumber: BatchNumber,
+        Price: Price,
+        status: status,
+        address: address,
+      };
+      console.log(Mdata);
+      try {
+        const result = await Medicine.findOne({
+          StripID: StripID,
+        });
+
+        if (result) {
+          res.json("exists");
+        } else {
+          await Medicine.insertMany([Mdata]);
+          res.json("added");
+        }
+      } catch (error) {
+        res.json({ message: "Error occurred" });
       }
     });
 

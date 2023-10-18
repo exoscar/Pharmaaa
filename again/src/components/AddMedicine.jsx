@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import axios from "axios";
 import { useStateContext } from "../context";
 const AddMedicine = () => {
   const { addMedicine, connect, address } = useStateContext();
@@ -38,13 +39,51 @@ const AddMedicine = () => {
     }
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   await addMedicine({
+  //     ...formData,
+  //   });
+
+  //   console.log(formData);
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     await addMedicine({
       ...formData,
     });
 
-    console.log(formData);
+    try {
+      await axios
+        .post("http://localhost:5000/addMedicine", {
+          MedicineName: formData.MedicineName,
+          StripID: formData.StripID,
+          Conditions: formData.Conditions,
+          Quantity: formData.Quantity,
+          Status: formData.Status,
+          Ingredients: formData.Ingredients,
+          SideEffects: formData.SideEffects,
+          ExpiryDate: formData.ExpiryDate,
+          ManufactureDate: formData.ManufactureDate,
+          BatchNumber: formData.BatchNumber,
+          Price: formData.Price,
+          address: address,
+        })
+        .then((res) => {
+          if (res.data == "exists") {
+            alert("Medicine Already Exists");
+          } else if (res.data == "added") {
+            alert("Medicine Added Successfully");
+          }
+        })
+        .catch((e) => {
+          alert("some error", e);
+          console.log(e);
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

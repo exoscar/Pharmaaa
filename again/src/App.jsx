@@ -9,6 +9,7 @@ import {
   Login,
   Dashboard,
   AddTruck,
+  SearchMedicine,
 } from "./components";
 
 const App = () => {
@@ -183,6 +184,14 @@ const App = () => {
           element={
             <div>
               <STLayout /> <ViewMedicine />
+            </div>
+          }
+        />
+        <Route
+          path="/searchMedicine"
+          element={
+            <div>
+              <STLayout /> <SearchMedicine />
             </div>
           }
         />
