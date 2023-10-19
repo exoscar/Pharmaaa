@@ -56,12 +56,6 @@ const ViewTruck = () => {
             <button onClick={handleSearch} className="btn btn-primary">
               Submit
             </button>
-            {/* <input
-              type="submit"
-              onClick={handleSearch}
-              className="btn"
-              defaultValue="Sign up"
-            /> */}
           </div>
         </form>
       </div>
