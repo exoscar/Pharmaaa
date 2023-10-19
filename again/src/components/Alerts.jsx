@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "../../public/assets/css/style.css";
 import axios from "axios";
+import { useStateContext } from "../context";
 const Alerts = () => {
+  const { updateMedicine, connect, address } = useStateContext();
+  if (address) {
+    console.log("Address", address);
+  } else {
+    connect();
+  }
+
+  const [formData, setFormData] = useState({
+    StripID: 0,
+    status: "Corrupted",
+  });
+
   const [search, setSearch] = useState("");
   const [alerts, setAlerts] = useState([]);
 
@@ -22,6 +35,67 @@ const Alerts = () => {
         });
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  function extractStripIDs(jsonArray) {
+    const result = [];
+
+    jsonArray.forEach((item) => {
+      if (item.StripID && Array.isArray(item.StripID)) {
+        item.StripID.forEach((idStr) => {
+          const ids = idStr.split("-");
+          if (ids.length === 2) {
+            const start = parseInt(ids[0], 10);
+            const end = parseInt(ids[1], 10);
+            for (let i = start; i <= end; i++) {
+              result.push(i);
+            }
+          } else {
+            result.push(parseInt(idStr, 10));
+          }
+        });
+      }
+    });
+
+    console.log(result);
+    return result;
+  }
+
+  async function handleUpdate(e) {
+    e.preventDefault();
+    const sids = extractStripIDs(alerts);
+
+    try {
+      for (const sid of sids) {
+        console.log(sid);
+
+        const updatedFormData = {
+          ...formData,
+          StripID: sid,
+        };
+
+        await updateMedicine(updatedFormData);
+
+        try {
+          await axios
+            .post("http://localhost:5000/updateStatus", { sid })
+            .then((res) => {
+              if (res.data == "updated") {
+                alert("Status Updated Successfully");
+              } else {
+                console.log("not updated");
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -64,11 +138,16 @@ const Alerts = () => {
             /> */}
           </div>
         </form>
+        <div className="text-center">
+          <button onClick={handleUpdate} className="btn btn-primary">
+            Update Alerts
+          </button>
+        </div>
       </div>
       <div className="col-lg-12">
         <div className="card">
           <div className="card-body">
-            <h5 className="card-title">Medicines</h5>
+            <h5 className="card-title">Alerts</h5>
 
             <table className="table table-striped">
               <thead>

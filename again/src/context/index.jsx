@@ -15,12 +15,16 @@ export const StateContextProvider = ({ children }) => {
   //   "0x47f0F482fb4EC4DfE827A2E8AfC32bae48F5510d"
   // );
   const { contract } = useContract(
-    "0x426Da94ddA44D8d4A34D694FBf4De4D71867C33A"
+    "0x3b4db99b35C29b9734b5CE968fbdBac673218c8F"
   );
 
   const { mutateAsync: addMedicine } = useContractWrite(
     contract,
     "addMedicine"
+  );
+  const { mutateAsync: updateMedicine } = useContractWrite(
+    contract,
+    "updateMedicine"
   );
 
   const address = useAddress();
@@ -61,6 +65,17 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
+  const ModifyMedicine = async (form) => {
+    try {
+      const data = await updateMedicine({
+        args: [form.StripID, form.status],
+      });
+      console.log("Update success");
+    } catch (error) {
+      console.log("Contract call failed", error);
+    }
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -69,6 +84,7 @@ export const StateContextProvider = ({ children }) => {
         connect,
         addMedicine: publishMedicine,
         getMedicine,
+        updateMedicine: ModifyMedicine,
       }}
     >
       {children}

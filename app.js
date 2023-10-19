@@ -267,6 +267,24 @@ async function connectToDb() {
       }
     });
 
+    app.post("/updateStatus", async (req, res) => {
+      const { sid } = req.body;
+      const sidd = sid.toString();
+      try {
+        const supdate = await Medicine.updateMany(
+          { StripID: sidd },
+          { $set: { status: "Corrupted" } }
+        );
+        if (supdate) {
+          res.json("updated");
+        } else {
+          res.json("not updated");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
     app.get("/trucks", async (req, res) => {
       try {
         const result = await TruckDetails.find({}).toArray();
