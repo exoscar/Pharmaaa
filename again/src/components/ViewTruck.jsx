@@ -4,7 +4,7 @@ import axios from "axios";
 const ViewTruck = () => {
   const [search, setSearch] = useState("");
   const [trucks, setTrucks] = useState([]);
-
+  const [display, setDisplay] = useState([]);
   async function handleSearch(e) {
     e.preventDefault();
     try {
@@ -25,10 +25,28 @@ const ViewTruck = () => {
     }
   }
 
+  async function handleDelivered(e) {
+    e.preventDefault();
+    try {
+      // const result = await axios.get("http://localhost:5000/medicines");
+      // setMedicines(result.data);
+      // console.log(medicines);
+      const filteredData = trucks.filter((item) => item.status === "Delivered");
+      setDisplay(filteredData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleAll(e) {
+    window.location.reload();
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await axios.get("http://localhost:5000/trucks");
+        setDisplay(result.data);
         setTrucks(result.data);
         console.log(trucks);
       } catch (error) {
@@ -59,6 +77,14 @@ const ViewTruck = () => {
           </div>
         </form>
       </div>
+      <div className="text-center">
+        <button onClick={handleDelivered} className="btn btn-primary">
+          Delivered Trucks
+        </button>
+        <button onClick={handleAll} className="btn btn-primary">
+          All Trucks
+        </button>
+      </div>
       <div className="col-lg-12">
         <div className="card">
           <div className="card-body">
@@ -75,7 +101,7 @@ const ViewTruck = () => {
                 </tr>
               </thead>
               <tbody>
-                {trucks.map((truck, i) => (
+                {display.map((truck, i) => (
                   <tr key={truck.RegistrationNumber}>
                     <th scope="row">{truck.status}</th>
                     <td>{truck.RegistrationNumber}</td>
