@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
 const cors = require("cors");
-
+const qr = require("qrcode");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -292,6 +292,18 @@ async function connectToDb() {
       } catch (e) {
         console.log(e);
       }
+    });
+
+    app.get("/generateQR", (req, res) => {
+      const data = req.query.data;
+
+      qr.toDataURL(data, (err, url) => {
+        if (err) {
+          res.status(500).json({ error: "Failed to generate QR code" });
+        } else {
+          res.send(url);
+        }
+      });
     });
 
     const PORT = process.env.PORT || 5000;

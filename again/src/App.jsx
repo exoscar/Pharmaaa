@@ -12,6 +12,7 @@ import {
   Alerts,
   SearchMedicine,
   ViewTruck,
+  QrCode,
 } from "./components";
 
 const App = () => {
@@ -211,6 +212,14 @@ const App = () => {
           element={
             <div>
               <STLayout /> <ViewTruck />
+            </div>
+          }
+        />
+        <Route
+          path="/qrCode"
+          element={
+            <div>
+              <STLayout /> <QrCode />
             </div>
           }
         />
