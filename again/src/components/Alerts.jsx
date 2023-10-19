@@ -3,16 +3,15 @@ import "../../public/assets/css/style.css";
 import axios from "axios";
 import { useStateContext } from "../context";
 const Alerts = () => {
-  const { updateMedicine, connect, address } = useStateContext();
+  const { updateManyMedicine, connect, address } = useStateContext();
   if (address) {
     console.log("Address", address);
   } else {
     connect();
   }
 
-  const [formData, setFormData] = useState({
-    StripID: 0,
-    status: "Corrupted",
+  const [form, setForm] = useState({
+    sids: [], // Initialize with an array of strip IDs you want to update
   });
 
   const [search, setSearch] = useState("");
@@ -65,24 +64,19 @@ const Alerts = () => {
   async function handleUpdate(e) {
     e.preventDefault();
     const sids = extractStripIDs(alerts);
+    setForm({ sids });
 
     try {
+      await updateManyMedicine({ sids });
+
       for (const sid of sids) {
         console.log(sid);
-
-        const updatedFormData = {
-          ...formData,
-          StripID: sid,
-        };
-
-        await updateMedicine(updatedFormData);
-
         try {
           await axios
             .post("http://localhost:5000/updateStatus", { sid })
             .then((res) => {
               if (res.data == "updated") {
-                alert("Status Updated Successfully");
+                console.log("updated");
               } else {
                 console.log("not updated");
               }

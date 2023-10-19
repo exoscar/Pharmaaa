@@ -91,6 +91,28 @@ contract MedicineContract {
     }
 
 
+    function updateManyMedicine(uint256[] memory stripIDs) public {
+    for (uint256 i = 0; i < stripIDs.length; i++) {
+        uint256 stripID = stripIDs[i];
+        if (medicines[stripID].StripID != 0) {
+            medicines[stripID].status = "corrupt";
+            emit MedicineUpdated(stripID);
+         }
+     }
+    }
+
+function deleteAllStrips() public {
+    for (uint256 i = 1; i <= medicineCount; i++) {
+        if (medicines[i].StripID != 0) {
+            delete medicines[i];
+           
+        }
+    }
+    medicineCount = 0; 
+}
+
+
+
 function getMedicine(uint256 _StripID) public view returns (
     // address owner,
     string memory MedicineName,
