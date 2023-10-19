@@ -4,7 +4,7 @@ import axios from "axios";
 const SearchMedicine = () => {
   const [search, setSearch] = useState("");
   const [medicines, setMedicines] = useState([]);
-
+  const [display, setDisplay] = useState([]);
   async function handleSearch(e) {
     e.preventDefault();
 
@@ -27,10 +27,49 @@ const SearchMedicine = () => {
     }
   }
 
+  async function handleCorrupt(e) {
+    e.preventDefault();
+    try {
+      // const result = await axios.get("http://localhost:5000/medicines");
+      // setMedicines(result.data);
+      // console.log(medicines);
+      const filteredData = medicines.filter((item) => item.status !== "Ideal");
+      setDisplay(filteredData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleLatest(e) {
+    e.preventDefault();
+    try {
+      // const result = await axios.get("http://localhost:5000/medicines");
+      // setMedicines(result.data);
+      // console.log(medicines);
+      const filteredData = medicines.slice().reverse();
+      setDisplay(filteredData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleAll(e) {
+    e.preventDefault();
+    try {
+      const result = await axios.get("http://localhost:5000/medicines");
+      setDisplay(result.data);
+      setMedicines(result.data);
+      console.log(medicines);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await axios.get("http://localhost:5000/medicines");
+        setDisplay(result.data);
         setMedicines(result.data);
         console.log(medicines);
       } catch (error) {
@@ -58,14 +97,19 @@ const SearchMedicine = () => {
             <button onClick={handleSearch} className="btn btn-primary">
               Submit
             </button>
-            {/* <input
-              type="submit"
-              onClick={handleSearch}
-              className="btn"
-              defaultValue="Sign up"
-            /> */}
           </div>
         </form>
+      </div>
+      <div className="text-center">
+        <button onClick={handleCorrupt} className="btn btn-primary">
+          Corupted Medicines
+        </button>
+        <button onClick={handleLatest} className="btn btn-primary">
+          Latest Medicines
+        </button>
+        <button onClick={handleAll} className="btn btn-primary">
+          All Medicines
+        </button>
       </div>
       <div className="col-lg-12">
         <div className="card">
@@ -83,14 +127,14 @@ const SearchMedicine = () => {
                 </tr>
               </thead>
               <tbody>
-                {medicines.map((alert, i) => (
-                  <tr key={alert.StripID}>
+                {display.map((medicine, i) => (
+                  <tr key={medicine.StripID}>
                     <th scope="row">{i + 1}</th>
-                    <td>{alert.MedicineName}</td>
-                    <td>{alert.StripID}</td>
+                    <td>{medicine.MedicineName}</td>
+                    <td>{medicine.StripID}</td>
 
-                    <td>{alert.BatchNumber}</td>
-                    <td>{alert.status}</td>
+                    <td>{medicine.BatchNumber}</td>
+                    <td>{medicine.status}</td>
                   </tr>
                 ))}
               </tbody>

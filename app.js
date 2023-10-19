@@ -269,7 +269,7 @@ async function connectToDb() {
 
     app.get("/trucks", async (req, res) => {
       try {
-        const result = await TruckDetails.find({ status: "0" }).toArray();
+        const result = await TruckDetails.find({}).toArray();
         if (result) {
           res.json(result);
         } else {
