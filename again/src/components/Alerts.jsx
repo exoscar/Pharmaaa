@@ -16,6 +16,7 @@ const Alerts = () => {
 
   const [search, setSearch] = useState("");
   const [alerts, setAlerts] = useState([]);
+  const [medicines, setMedicines] = useState([]);
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -37,7 +38,7 @@ const Alerts = () => {
     }
   }
 
-  function extractStripIDs(jsonArray) {
+  function extractStripData(jsonArray) {
     const result = [];
 
     jsonArray.forEach((item) => {
@@ -48,24 +49,60 @@ const Alerts = () => {
             const start = parseInt(ids[0], 10);
             const end = parseInt(ids[1], 10);
             for (let i = start; i <= end; i++) {
-              result.push(i);
+              result.push({
+                StripID: i,
+                Temperature: item.temperature,
+                Humidity: item.humidity,
+              });
             }
           } else {
-            result.push(parseInt(idStr, 10));
+            result.push({
+              StripID: parseInt(idStr, 10),
+              Temperature: item.temperature,
+              Humidity: item.humidity,
+            });
           }
         });
       }
     });
 
-    console.log(result);
+    return result;
+  }
+
+  function filterStripData(sthData, mediData) {
+    const result = [];
+    sthData.forEach((item) => {
+      mediData.forEach((medi) => {
+        if (parseInt(medi.StripID) === item.StripID) {
+          const temp = parseFloat(item.Temperature);
+          const humidity = parseFloat(item.Humidity);
+          const mtemp = parseFloat(medi.mintemp);
+          const matemp = parseFloat(medi.maxtemp);
+          const mhumidity = parseFloat(medi.minhumi);
+          const mahumidity = parseFloat(medi.maxhumi);
+          if (
+            temp < mtemp ||
+            temp > matemp ||
+            humidity < mhumidity ||
+            humidity > mahumidity
+          ) {
+            result.push(item.StripID);
+          }
+        }
+      });
+    });
     return result;
   }
 
   async function handleUpdate(e) {
     e.preventDefault();
-    const sids = extractStripIDs(alerts);
-    setForm({ sids });
 
+    const hehe = extractStripData(alerts);
+    console.log(hehe);
+    const sids = filterStripData(hehe, medicines);
+
+    setForm({ sids });
+    console.log(sids);
     try {
       await updateManyMedicine({ sids });
 
@@ -98,12 +135,26 @@ const Alerts = () => {
       try {
         const result = await axios.get("http://localhost:5000/alerts");
         setAlerts(result.data);
-        console.log(alerts);
+        const hehe = extractStripData(result.data);
+
+        console.log(hehe);
+
+        // console.log(result.data);
       } catch (error) {
         console.log(error);
       }
     };
 
+    const fetchMedicine = async () => {
+      try {
+        const medi = await axios.get("http://localhost:5000/medicines");
+        setMedicines(medi.data);
+        console.log(medi.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchMedicine();
     fetchData();
   }, []);
 

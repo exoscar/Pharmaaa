@@ -275,10 +275,22 @@ async function connectToDb() {
           { StripID: sidd },
           { $set: { status: "Corrupted" } }
         );
-        if (supdate) {
-          res.json("updated");
+
+        const filter = {
+          StripID: { $in: [sidd] }, // Check if StripID is in the array
+          status: "0",
+        };
+
+        const update = {
+          $set: {
+            status: "corrupted",
+          },
+        };
+        const aupte = await Alerts.updateMany(filter, update);
+        if (aupte) {
+          res.json("aupdated");
         } else {
-          res.json("not updated");
+          res.json("anot updated");
         }
       } catch (error) {
         console.log(error);

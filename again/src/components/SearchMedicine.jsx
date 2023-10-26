@@ -5,6 +5,7 @@ const SearchMedicine = () => {
   const [search, setSearch] = useState("");
   const [medicines, setMedicines] = useState([]);
   const [display, setDisplay] = useState([]);
+
   async function handleSearch(e) {
     e.preventDefault();
 
