@@ -336,8 +336,19 @@ async function connectToDb() {
       });
     });
 
+    app.post("/demo", async (req, res) => {
+      const data = req.body;
+      console.log(data);
+      if (data) {
+        res.send(1);
+      } else {
+        res.send(-99);
+      }
+    });
+
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
+    const host = "0.0.0.0";
+    app.listen(PORT, host, () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
