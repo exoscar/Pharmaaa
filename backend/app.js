@@ -337,8 +337,8 @@ async function connectToDb() {
     });
 
     app.post("/demo", async (req, res) => {
-      const data = req.body;
-      console.log(data);
+      const { temperature, humidity } = req.body;
+      console.log(temperature, humidity);
       if (data) {
         res.send(1);
       } else {

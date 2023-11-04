@@ -22,7 +22,7 @@ const Alerts = () => {
     e.preventDefault();
     try {
       await axios
-        .post("http://localhost:5000/alerts", { search })
+        .post("https://pharma-blgp.onrender.com/alerts", { search })
         .then((res) => {
           if (res.data) {
             setAlerts(res.data);
@@ -110,7 +110,7 @@ const Alerts = () => {
         console.log(sid);
         try {
           await axios
-            .post("http://localhost:5000/updateStatus", { sid })
+            .post("https://pharma-blgp.onrender.com/updateStatus", { sid })
             .then((res) => {
               if (res.data == "updated") {
                 console.log("updated");
@@ -133,7 +133,9 @@ const Alerts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get("http://localhost:5000/alerts");
+        const result = await axios.get(
+          "https://pharma-blgp.onrender.com/alerts"
+        );
         setAlerts(result.data);
         const hehe = extractStripData(result.data);
 
@@ -147,7 +149,9 @@ const Alerts = () => {
 
     const fetchMedicine = async () => {
       try {
-        const medi = await axios.get("http://localhost:5000/medicines");
+        const medi = await axios.get(
+          "https://pharma-blgp.onrender.com/medicines"
+        );
         setMedicines(medi.data);
         console.log(medi.data);
       } catch (error) {

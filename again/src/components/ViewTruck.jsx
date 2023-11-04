@@ -9,7 +9,7 @@ const ViewTruck = () => {
     e.preventDefault();
     try {
       await axios
-        .post("http://localhost:5000/trucks", { search })
+        .post("https://pharma-blgp.onrender.com/trucks", { search })
         .then((res) => {
           if (res.data) {
             setDisplay(res.data);
@@ -29,7 +29,7 @@ const ViewTruck = () => {
   async function handleDelivered(e) {
     e.preventDefault();
     try {
-      // const result = await axios.get("http://localhost:5000/medicines");
+      // const result = await axios.get("https://pharma-blgp.onrender.com/medicines");
       // setMedicines(result.data);
       // console.log(medicines);
       const filteredData = trucks.filter((item) => item.status === "Delivered");
@@ -46,7 +46,9 @@ const ViewTruck = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get("http://localhost:5000/trucks");
+        const result = await axios.get(
+          "https://pharma-blgp.onrender.com/trucks"
+        );
         setDisplay(result.data);
         setTrucks(result.data);
         console.log(trucks);

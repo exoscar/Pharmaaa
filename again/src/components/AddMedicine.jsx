@@ -56,7 +56,7 @@ const AddMedicine = () => {
 
     try {
       await axios
-        .post("http://localhost:5000/addMedicine", {
+        .post("https://pharma-blgp.onrender.com/addMedicine", {
           MedicineName: formData.MedicineName,
           StripID: formData.StripID,
           Conditions: formData.Conditions,

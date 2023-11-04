@@ -6,7 +6,7 @@ const QrCode = () => {
   const generateQRCode = async () => {
     const data = "Ruthvikh thope ra lafoot"; // Replace with your data
     const response = await axios.get(
-      `http://localhost:5000/generateQR?data=${data}`
+      `https://pharma-blgp.onrender.com/generateQR?data=${data}`
     );
     setQrCode(response.data);
     console.log(response.data);

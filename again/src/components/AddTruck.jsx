@@ -38,7 +38,7 @@ const AddTruck = () => {
 
     try {
       await axios
-        .post("http://localhost:5000/sendTruckDetails", {
+        .post("https://pharma-blgp.onrender.com/sendTruckDetails", {
           RegistrationNumber: formData.RegistrationNumber,
           StripID: formData.StripID,
           From: formData.From,

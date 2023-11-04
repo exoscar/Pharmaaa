@@ -11,7 +11,7 @@ const SearchMedicine = () => {
 
     try {
       await axios
-        .post("http://localhost:5000/medicines", { search })
+        .post("https://pharma-blgp.onrender.com/medicines", { search })
         .then((res) => {
           if (res.data) {
             console.log(res.data);
@@ -32,7 +32,7 @@ const SearchMedicine = () => {
   async function handleCorrupt(e) {
     e.preventDefault();
     try {
-      // const result = await axios.get("http://localhost:5000/medicines");
+      // const result = await axios.get("https://pharma-blgp.onrender.com/medicines");
       // setMedicines(result.data);
       // console.log(medicines);
       const filteredData = medicines.filter((item) => item.status !== "Ideal");
@@ -45,7 +45,7 @@ const SearchMedicine = () => {
   async function handleLatest(e) {
     e.preventDefault();
     try {
-      // const result = await axios.get("http://localhost:5000/medicines");
+      // const result = await axios.get("https://pharma-blgp.onrender.com/medicines");
       // setMedicines(result.data);
       // console.log(medicines);
       const filteredData = medicines.slice().reverse();
@@ -58,7 +58,9 @@ const SearchMedicine = () => {
   async function handleAll(e) {
     e.preventDefault();
     try {
-      const result = await axios.get("http://localhost:5000/medicines");
+      const result = await axios.get(
+        "https://pharma-blgp.onrender.com/medicines"
+      );
       setDisplay(result.data);
       setMedicines(result.data);
       console.log(medicines);
@@ -70,7 +72,9 @@ const SearchMedicine = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get("http://localhost:5000/medicines");
+        const result = await axios.get(
+          "https://pharma-blgp.onrender.com/medicines"
+        );
         setDisplay(result.data);
         setMedicines(result.data);
         console.log(medicines);

@@ -3,7 +3,7 @@ import "../../public/assets/css/Login.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 const Login = () => {
-  const weurl = "http://localhost:5000/auth";
+  const weurl = "https://pharma-blgp.onrender.com/auth";
 
   const history = useNavigate();
   const [isSignUpMode, setIsSignUpMode] = useState(false);
