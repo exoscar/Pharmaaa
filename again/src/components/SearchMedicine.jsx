@@ -15,6 +15,7 @@ const SearchMedicine = () => {
         .then((res) => {
           if (res.data) {
             console.log(res.data);
+            setDisplay(res.data);
             setMedicines(res.data);
           } else {
             console.log("no data");
@@ -90,22 +91,39 @@ const SearchMedicine = () => {
             name="query"
             placeholder="Search"
             title="Enter search keyword"
+            style={{
+              padding: "0.38em",
+              borderRadius: "8px",
+              border: "1px solid black",
+            }}
             onChange={(e) => {
               setSearch(e.target.value);
             }}
           />
           <div className="text-center">
-            <button onClick={handleSearch} className="btn btn-primary">
+            <button
+              onClick={handleSearch}
+              className="btn btn-primary"
+              style={{ margin: "10px" }}
+            >
               Submit
             </button>
           </div>
         </form>
       </div>
       <div className="text-center">
-        <button onClick={handleCorrupt} className="btn btn-primary">
+        <button
+          onClick={handleCorrupt}
+          className="btn btn-primary"
+          style={{ margin: "10px" }}
+        >
           Corupted Medicines
         </button>
-        <button onClick={handleLatest} className="btn btn-primary">
+        <button
+          onClick={handleLatest}
+          className="btn btn-primary"
+          style={{ margin: "10px" }}
+        >
           Latest Medicines
         </button>
         <button onClick={handleAll} className="btn btn-primary">

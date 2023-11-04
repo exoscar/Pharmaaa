@@ -12,6 +12,7 @@ const ViewTruck = () => {
         .post("http://localhost:5000/trucks", { search })
         .then((res) => {
           if (res.data) {
+            setDisplay(res.data);
             setTrucks(res.data);
           } else {
             console.log("no data");
@@ -66,19 +67,32 @@ const ViewTruck = () => {
             name="query"
             placeholder="Search"
             title="Enter search keyword"
+            style={{
+              padding: "0.38em",
+              borderRadius: "8px",
+              border: "1px solid black",
+            }}
             onChange={(e) => {
               setSearch(e.target.value);
             }}
           />
           <div className="text-center">
-            <button onClick={handleSearch} className="btn btn-primary">
+            <button
+              onClick={handleSearch}
+              className="btn btn-primary"
+              style={{ margin: "20px" }}
+            >
               Submit
             </button>
           </div>
         </form>
       </div>
       <div className="text-center">
-        <button onClick={handleDelivered} className="btn btn-primary">
+        <button
+          onClick={handleDelivered}
+          className="btn btn-primary"
+          style={{ margin: "10px", marginBottom: "10px" }}
+        >
           Delivered Trucks
         </button>
         <button onClick={handleAll} className="btn btn-primary">

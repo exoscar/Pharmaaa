@@ -248,10 +248,14 @@ const AddMedicine = () => {
                   </div>
 
                   <div className="text-center">
-                    <button type="submit" className="btn btn-primary">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      style={{ margin: "20px" }}
+                    >
                       Submit
                     </button>
-                    <button type="reset" className="btn btn-secondary">
+                    <button type="reset" className="btn btn-warning">
                       Reset
                     </button>
                   </div>

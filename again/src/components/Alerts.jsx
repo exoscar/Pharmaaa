@@ -167,12 +167,23 @@ const Alerts = () => {
             name="query"
             placeholder="Search"
             title="Enter search keyword"
+            style={{
+              padding: "0.38em",
+              borderRadius: "8px",
+              border: "1px solid black",
+            }}
             onChange={(e) => {
               setSearch(e.target.value);
             }}
           />
           <div className="text-center">
-            <button onClick={handleSearch} className="btn btn-primary">
+            <button
+              onClick={handleSearch}
+              className="btn btn-primary"
+              style={{
+                margin: "10px",
+              }}
+            >
               Submit
             </button>
             {/* <input
@@ -184,7 +195,11 @@ const Alerts = () => {
           </div>
         </form>
         <div className="text-center">
-          <button onClick={handleUpdate} className="btn btn-primary">
+          <button
+            onClick={handleUpdate}
+            className="btn btn-primary"
+            style={{ marginBottom: "0.5rem" }}
+          >
             Update Alerts
           </button>
         </div>

@@ -41,7 +41,7 @@ const Sidebar = () => {
     <aside id="sidebar" className="sidebar">
       <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
-          <a className="nav-link collapsed" href="/">
+          <a className="nav-link collapsed" href="/dashboard">
             <i className="bi bi-grid"></i>
             <span>Dashboard</span>
           </a>
@@ -53,7 +53,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link collapsed" href="/viewMedicine">
+          <a className="nav-link collapsed" href="/searchMedicine">
             <i className="bi bi-grid"></i>
             <span>Search Medicine</span>
           </a>
@@ -87,7 +87,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <a className="nav-link collapsed" href="/">
             <i className="bi bi-bar-chart"></i>
             <span>Charts</span>
@@ -99,12 +99,33 @@ const Sidebar = () => {
             <i className="bi bi-person"></i>
             <span>Profile</span>
           </a>
-        </li>
+        </li> */}
 
         <li className="nav-item">
           <a className="nav-link collapsed" href="/addTruckDetails">
             <i className="bi bi-person"></i>
             <span>Add Truck Details</span>
+          </a>
+        </li>
+
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="/viewTrucks">
+            <i className="bi bi-person"></i>
+            <span>View Trucks</span>
+          </a>
+        </li>
+
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="/alerts">
+            <i className="bi bi-person"></i>
+            <span>Alerts</span>
+          </a>
+        </li>
+
+        <li className="nav-item">
+          <a className="nav-link collapsed" href="/">
+            <i className="bi bi-person"></i>
+            <span>Logout</span>
           </a>
         </li>
       </ul>

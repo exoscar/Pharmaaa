@@ -169,9 +169,10 @@ const Login = () => {
               <div className="logoimg">
                 <img src="aspire.png" alt="" />
               </div>
+              <h1>PharmaTraceX</h1>
               <p>
-                Networking with a Twist : Where Students connect and Redefine
-                what's possible!
+                "Unlocking Trust: Your Gateway to Transparent and Secure
+                Medications"
               </p>
               <h3>New here ?</h3>
               <button
@@ -188,9 +189,10 @@ const Login = () => {
               <div className="logoimg">
                 <img src="aspire.png" alt="" />
               </div>
+              <h1>PharmaTraceX</h1>
               <p>
-                Networking with a Twist : Where Students connect and Redefine
-                what's possible!
+                "Join the Future: Sign Up for a Transparent and Secure
+                Medication Experience"
               </p>
               <h3>One of us ?</h3>
               <button
