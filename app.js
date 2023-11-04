@@ -252,10 +252,10 @@ async function connectToDb() {
 
     app.post("/medicines", async (req, res) => {
       const { search } = req.body;
-      const ser = parseInt(search, 10);
+      //const ser = parseInt(search, 10);
       console.log(typeof search);
       try {
-        const mdata = await Medicine.find({ StripID: ser }).toArray();
+        const mdata = await Medicine.find({ StripID: search }).toArray();
         if (mdata) {
           console.log(mdata);
           res.json(mdata);
